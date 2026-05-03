@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600;700&family=Barlow+Condensed:wght@700;900&display=swap');
+
+  :root {
+    --blue: #3a6fff;
+    --blue-dark: #1a2aff;
+    --blue-light: #7aaaff;
+    --blue-glow: rgba(58,111,255,0.4);
+    --dark: #0d0d0f;
+    --mid: #13141a;
+    --gray: #888;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--dark);
+    color: #fff;
+    font-family: 'Rajdhani', sans-serif;
+    overflow-x: hidden;
+  }
+
+  #particles {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    opacity: 0.12;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 100px 40px 80px;
+    background: radial-gradient(ellipse at 50% 0%, #0d1a55 0%, var(--dark) 70%);
+    border-bottom: 1px solid #1e2030;
+    min-height: 60vh;
+  }
+
+  .hero-eyebrow {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 11px;
+    letter-spacing: 5px;
+    color: var(--blue-light);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    opacity: 0;
+    animation: fadeUp 0.6s 0.2s forwards;
+  }
+
+  .hero-title {
+    line-height: 1;
+    margin-bottom: 6px;
+    opacity: 0;
+    animation: fadeUp 0.7s 0.4s forwards;
+  }
+
+  .hero-title .muzz {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: clamp(3.5rem, 10vw, 7rem);
+    color: #fff;
+    display: block;
+    letter-spacing: 4px;
+  }
+
+  .hero-title .optim {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 900;
+    font-size: clamp(2rem, 5.5vw, 5rem);
+    background: linear-gradient(135deg, var(--blue-light) 0%, var(--blue) 50%, #2200cc 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: block;
+    filter: drop-shadow(0 0 20px var(--blue-glow));
+    letter-spacing: -1px;
+  }
+
+  .hero-title .services {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: clamp(2.8rem, 8vw, 6rem);
+    color: #fff;
+    display: block;
+    letter-spacing: 6px;
+  }
+
+  .hero-perks {
+    list-style: none;
+    margin: 36px 0 40px;
+    opacity: 0;
+    animation: fadeUp 0.7s 0.6s forwards;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .hero-perks li {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(1.4rem, 3vw, 2rem);
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    color: #eee;
+  }
+
+  .hero-perks li .arr { color: var(--blue); font-size: 1em; }
+
+  .hero-perks li .tag {
+    font-size: 0.55em;
+    background: rgba(58,111,255,0.15);
+    border: 1px solid rgba(58,111,255,0.3);
+    color: var(--blue-light);
+    padding: 2px 10px;
+    border-radius: 20px;
+    font-family: 'Orbitron', sans-serif;
+    letter-spacing: 1px;
+  }
+
+  .hero-btns {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    justify-content: center;
+    opacity: 0;
+    animation: fadeUp 0.7s 0.8s forwards;
+  }
+
+  .btn {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 11px;
+    letter-spacing: 2px;
+    padding: 13px 28px;
+    border-radius: 6px;
+    text-transform: uppercase;
+    cursor: pointer;
+    border: none;
+    transition: all 0.25s;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .btn-primary {
+    background: var(--blue);
+    color: #fff;
+    font-weight: 700;
+    box-shadow: 0 0 30px var(--blue-glow);
+  }
+  .btn-primary:hover { box-shadow: 0 0 50px rgba(58,111,255,0.7); transform: scale(1.05); }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--blue-light);
+    border: 1px solid var(--blue);
+  }
+  .btn-secondary:hover { background: rgba(58,111,255,0.1); transform: scale(1.05); }
+
+  .divider {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--blue), transparent);
+    position: relative;
+    z-index: 1;
+    opacity: 0.3;
+  }
+
+  .features {
+    position: relative;
+    z-index: 1;
+    padding: 80px 40px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 11px;
+    letter-spacing: 5px;
+    color: var(--blue-light);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .section-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: clamp(2rem, 4vw, 3rem);
+    margin-bottom: 40px;
+    letter-spacing: 1px;
+  }
+
+  .feat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+  }
+
+  .feat-card {
+    background: var(--mid);
+    border: 1px solid #1e2030;
+    border-radius: 12px;
+    padding: 28px 24px;
+    transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+  }
+
+  .feat-card:hover {
+    transform: translateY(-6px);
+    border-color: var(--blue);
+    box-shadow: 0 0 30px rgba(58,111,255,0.15);
+  }
+
+  .feat-icon { font-size: 2rem; margin-bottom: 14px; display: block; }
+
+  .feat-name {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--blue-light);
+    margin-bottom: 8px;
+    letter-spacing: 1px;
+  }
+
+  .feat-desc { font-size: 14px; color: var(--gray); line-height: 1.6; }
+
+  .os-section {
+    position: relative;
+    z-index: 1;
+    padding: 60px 40px;
+    text-align: center;
+  }
+
+  .os-row {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 36px;
+  }
+
+  .os-pill {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--mid);
+    border: 1px solid #1e2030;
+    border-radius: 50px;
+    padding: 14px 28px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    transition: all 0.25s;
+  }
+
+  .os-pill:hover {
+    border-color: var(--blue);
+    box-shadow: 0 0 20px var(--blue-glow);
+    transform: scale(1.05);
+  }
+
+  .cta-section {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 80px 20px;
+    background: radial-gradient(ellipse at 50% 100%, rgba(26,42,255,0.12) 0%, transparent 70%);
+    border-top: 1px solid #1e2030;
+  }
+
+  .cta-section h2 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+  }
+
+  .cta-free-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--blue), var(--blue-dark));
+    color: #fff;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 11px;
+    letter-spacing: 3px;
+    padding: 6px 18px;
+    border-radius: 20px;
+    margin-bottom: 18px;
+    box-shadow: 0 0 20px var(--blue-glow);
+  }
+
+  .cta-section p { color: var(--gray); font-size: 16px; margin-bottom: 32px; }
+
+  footer {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 22px;
+    border-top: 1px solid #1a1a22;
+    font-size: 11px;
+    color: #333;
+    letter-spacing: 3px;
+    font-family: 'Orbitron', sans-serif;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s, transform 0.6s;
+  }
+  .reveal.visible { opacity: 1; transform: none; }
+</style>
+</head>
+<body>
+
+<canvas id="particles"></canvas>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow">// PC Optimization Studio</div>
+  <div class="hero-title">
+    <span class="muzz">MUZZ</span>
+    <span class="optim">OPTIMIZATION</span>
+    <span class="services">SERVICES</span>
+  </div>
+  <ul class="hero-perks">
+    <li><span class="arr">&gt;</span> Free <span class="tag">Always</span></li>
+    <li><span class="arr">&gt;</span> WIN, LINUX, MAC</li>
+    <li><span class="arr">&gt;</span> More FPS <span class="tag">Guaranteed</span></li>
+  </ul>
+  <div class="hero-btns">
+    <a href="#" class="btn btn-primary">Get Optimized</a>
+    <a href="#" class="btn btn-secondary">Learn More</a>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- FEATURES -->
+<section class="features">
+  <div class="reveal">
+    <div class="section-label">// What You Get</div>
+    <div class="section-title">Everything. For Free.</div>
+  </div>
+  <div class="feat-grid reveal">
+    <div class="feat-card">
+      <span class="feat-icon">⚡</span>
+      <div class="feat-name">FPS Boost</div>
+      <div class="feat-desc">Squeeze every last frame out of your hardware. More FPS, smoother gameplay.</div>
+    </div>
+    <div class="feat-card">
+      <span class="feat-icon">🖥️</span>
+      <div class="feat-name">System Cleanup</div>
+      <div class="feat-desc">Remove bloatware, kill background processes, and free up precious RAM.</div>
+    </div>
+    <div class="feat-card">
+      <span class="feat-icon">🌐</span>
+      <div class="feat-name">Network Tweaks</div>
+      <div class="feat-desc">Lower your ping and reduce packet loss for a competitive edge online.</div>
+    </div>
+    <div class="feat-card">
+      <span class="feat-icon">🔒</span>
+      <div class="feat-name">Privacy Mode</div>
+      <div class="feat-desc">Strip telemetry and unwanted tracking while keeping your system fast.</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- OS SECTION -->
+<div class="os-section">
+  <div class="reveal">
+    <div class="section-label">// Platform Support</div>
+    <div class="section-title">Works on Every OS</div>
+    <div class="os-row">
+      <div class="os-pill">🪟 Windows</div>
+      <div class="os-pill">🐧 Linux</div>
+      <div class="os-pill">🍎 macOS</div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- CTA -->
+<div class="cta-section">
+  <div class="reveal">
+    <div class="cta-free-badge">100% FREE — NO STRINGS ATTACHED</div>
+    <h2>Your PC is <span style="color:var(--blue-light)">Waiting.</span></h2>
+    <p>Join hundreds of users who already boosted their performance with Muzz.</p>
+    <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;">
+      <a href="#" class="btn btn-primary">Start Now — It's Free</a>
+      <a href="#" class="btn btn-secondary">Contact Muzz</a>
+    </div>
+  </div>
+</div>
+
+<footer>©MUZZ SERVICES &nbsp;·&nbsp; ALL RIGHTS RESERVED</footer>
+
+<script>
+const canvas = document.getElementById('particles');
+const ctx = canvas.getContext('2d');
+function resize() { canvas.width = innerWidth; canvas.height = innerHeight; }
+resize(); window.addEventListener('resize', resize);
+
+const pts = Array.from({length: 60}, () => ({
+  x: Math.random() * innerWidth, y: Math.random() * innerHeight,
+  r: Math.random() * 1.5 + 0.3,
+  vx: (Math.random() - 0.5) * 0.4, vy: (Math.random() - 0.5) * 0.4,
+}));
+
+function drawParticles() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = '#3a6fff';
+  pts.forEach(p => {
+    ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2); ctx.fill();
+    p.x += p.vx; p.y += p.vy;
+    if (p.x < 0) p.x = innerWidth; if (p.x > innerWidth) p.x = 0;
+    if (p.y < 0) p.y = innerHeight; if (p.y > innerHeight) p.y = 0;
+  });
+  ctx.strokeStyle = 'rgba(58,111,255,0.15)'; ctx.lineWidth = 0.5;
+  for (let i = 0; i < pts.length; i++)
+    for (let j = i+1; j < pts.length; j++) {
+      const dx = pts[i].x-pts[j].x, dy = pts[i].y-pts[j].y;
+      if (Math.sqrt(dx*dx+dy*dy) < 120) {
+        ctx.beginPath(); ctx.moveTo(pts[i].x, pts[i].y); ctx.lineTo(pts[j].x, pts[j].y); ctx.stroke();
+      }
+    }
+  requestAnimationFrame(drawParticles);
+}
+drawParticles();
+
+const reveals = document.querySelectorAll('.reveal');
+const obs = new IntersectionObserver(e => e.forEach(el => { if (el.isIntersecting) el.target.classList.add('visible'); }), { threshold: 0.1 });
+reveals.forEach(r => obs.observe(r));
+</script>
+</body>
+</html>
